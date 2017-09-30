@@ -8,6 +8,16 @@ public class NFA {
     private int nextStateID;
 
     /**
+     * This creates a completely blank NFA
+     */
+    private NFA() {
+        startState = 0;
+        endState = 0;
+        tList = new ArrayList<Transition>();
+        nextStateID = 0;
+    }
+
+    /**
      * This creates a new NFA that accepts a single symbol
      * @param symbol the symbol the NFA will accept
      */
@@ -24,9 +34,9 @@ public class NFA {
      * @param nfa
      */
     public NFA(NFA nfa) {
-        startState = nfa.getStartState();
-        endState = nfa.getEndState();
-        nextStateID = nfa.getNextStateID();
+        startState = nfa.startState;
+        endState = nfa.endState;
+        nextStateID = nfa.nextStateID;
         tList = nfa.getTransitions();
     }
 
@@ -55,32 +65,51 @@ public class NFA {
         startState = endState = newState;
     }
 
+    /**
+     * Concatenates 2 NFAs, this will not change the original NFAs
+     * @param nfa2 the NFA to concatenate to "this"
+     * @return a new NFA that represents the connected NFAs
+     */
     public NFA concatenate(NFA nfa2) {
-        NFA nfa3 = new NFA(this);
+        NFA nfa3 = new NFA();
+        int inc = nextStateID - 1;
+        // relabel the states from nfa2
+        ArrayList<Transition> tList2 = nfa2.getTransitions();
+        for (Transition t : tList2) {
+            t.fromState += inc;
+            t.toState += inc;
+        }
+        // set up nfa3
+        nfa3.startState = startState;
+        nfa3.endState = nfa2.endState + inc;
+        nfa3.nextStateID = nfa2.nextStateID + inc;
+        nfa3.tList.addAll(tList);
+        nfa3.tList.add(new Transition(endState,'E',nfa2.startState+inc));
+        nfa3.tList.addAll(tList2);
         return nfa3;
     }
 
     public class Transition {
-        private int from;
+        private int fromState;
         private char symbol;
-        private int to;
+        private int toState;
 
-        private Transition(int from, char symbol, int to) {
-            this.from = from;
+        private Transition(int fromState, char symbol, int to) {
+            this.fromState = fromState;
             this.symbol = symbol;
-            this.to = to;
+            this.toState = to;
         }
 
-        public int getFrom() {
-            return from;
+        public int getFromState() {
+            return fromState;
         }
 
         public char getSymbol() {
             return symbol;
         }
 
-        public int getTo() {
-            return to;
+        public int getToState() {
+            return toState;
         }
     }
 }
