@@ -1,5 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
@@ -27,13 +29,22 @@ public class NFATest {
     @Test
     public void testCopyConstructor() {
         NFA nfa2 = new NFA(nfa1);
+        ArrayList<NFA.Transition> tList2 = nfa2.getTransitions();
+
         assertTrue(nfa1 != nfa2);
+        assertEquals(nfa1.getStartState(),nfa2.getStartState());
+        assertEquals(nfa1.getEndState(),nfa2.getEndState());
+        assertEquals(tList1.size(),tList2.size());
+        assertEquals(tList1.get(0).getFrom(),tList2.get(0).getFrom());
+        assertEquals(tList1.get(0).getSymbol(),tList2.get(0).getSymbol());
+        assertEquals(tList1.get(0).getTo(),tList2.get(0).getTo());
     }
 
     @Test
     public void testKleeneStarStructure() {
         nfa1.kleeneStar();
         tList1 = nfa1.getTransitions();
+
         assertEquals(3,tList1.size());
         assertEquals(3,nfa1.getStartState());
         assertEquals(3,nfa1.getEndState());
@@ -52,6 +63,8 @@ public class NFATest {
     public void testConcatenationStructure() {
         NFA nfa2 = new NFA('b');
         NFA nfa3 = nfa1.concatenate(nfa2);
-        // TODO: Finish writing this test
+        ArrayList<NFA.Transition> tList3 = nfa3.getTransitions();
+
+        
     }
 }

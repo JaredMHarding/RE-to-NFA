@@ -20,7 +20,7 @@ public class NFA {
     }
 
     /**
-     * This creates a shallow copy of an already existing nfa
+     * This creates a copy of an already existing nfa
      * @param nfa
      */
     public NFA(NFA nfa) {
