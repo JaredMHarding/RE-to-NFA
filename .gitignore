@@ -1,4 +1,9 @@
 .idea/*
 out/*
-project.doc
+*.doc
+*.txt
 *.iml
+*.zip
+*.tar
+*.jar
+Harding_Jared_CS317/*

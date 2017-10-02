@@ -8,7 +8,7 @@ public class NFA {
     private int nextStateID;
 
     /**
-     * This creates a completely blank NFA
+     * This creates a completely blank nfa
      * Private because this is only for internal class use
      */
     private NFA() {
@@ -19,8 +19,8 @@ public class NFA {
     }
 
     /**
-     * This creates a new NFA that accepts a single symbol
-     * @param symbol the symbol the NFA will accept
+     * This creates a new nfa that accepts a single symbol
+     * @param symbol the symbol the nfa will accept
      */
     public NFA(char symbol) {
         startState = 1;
@@ -70,9 +70,9 @@ public class NFA {
     }
 
     /**
-     * Concatenates 2 NFAs, this will not change the original NFAs
-     * @param nfa2 the NFA to concatenate to "this"
-     * @return a new NFA that represents the connected NFAs
+     * Concatenates 2 nfa's, this will not change the original nfa's
+     * @param nfa2 the nfa to concatenate to "this"
+     * @return a new nfa that represents the connected nfa's
      */
     public NFA concatenate(NFA nfa2) {
         NFA nfa3 = new NFA();
@@ -88,6 +88,11 @@ public class NFA {
         return nfa3;
     }
 
+    /**
+     * Creates the union of 2 nfa's, this will not change the original nfa's
+     * @param nfa2 the second nfa to union with
+     * @return a new nfa that represents the unioned nfa
+     */
     public NFA union(NFA nfa2) {
         NFA nfa3 = new NFA();
         int inc = nextStateID - 1;
